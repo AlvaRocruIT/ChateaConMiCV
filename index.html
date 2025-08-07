@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatea con el CV de Álvaro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 2em;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      padding: 1em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.8em 1.2em;
+      font-size: 1em;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #response {
+      margin-top: 2em;
+      padding: 1em;
+      background-color: #fff;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 Chatea con mi CV</h1>
+  <p>Pregúntame sobre mi experiencia, propósito, habilidades o proyectos. Estoy aquí para conversar contigo.</p>
+
+  <textarea id="userInput" rows="4" placeholder="¿Qué te gustaría saber?"></textarea>
+  <button onclick="sendMessage()">Enviar</button>
+
+  <div id="response"></div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("userInput").value;
+      const resBox = document.getElementById("response");
+
+      resBox.innerText = "Pensando...";
+
+      try {
+        const response = await fetch("https://TU-WEBHOOK-URL", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: input })
+        });
+
+        const data = await response.json();
+        resBox.innerText = data.respuesta || "No se recibió respuesta.";
+      } catch (error) {
+        resBox.innerText = "Parece que algo no salió como lo planeamos. ¿Podrías intentar de nuevo o pasar a la siguiente pregunta?";
+      }
+    }
+  </script>
+</body>
+</html>
