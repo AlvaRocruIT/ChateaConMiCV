@@ -1,6 +1,6 @@
 # 🤖 ChateaConMiCV
 
-**Bienvenido al CV conversacional de Álvaro Vargas Herreros.**  
+**Bienvenido al CV interactivo de Álvaro Vargas Herreros.**  
 Este proyecto transforma la experiencia tradicional de revisión curricular en una conversación interactiva, empática y estratégica.
 
 ---
@@ -8,7 +8,7 @@ Este proyecto transforma la experiencia tradicional de revisión curricular en u
 ## 🚀 ¿Qué es esto?
 
 `ChateaConMiCV` es un chatbot diseñado para responder preguntas sobre mi experiencia, propósito, habilidades y trayectoria profesional.  
-Utiliza inteligencia artificial y automatización para ofrecer una experiencia única a reclutadores, líderes de cultura organizacional y curiosos del futuro del trabajo.
+Utiliza IA y automatización para ofrecer una experiencia única a reclutadores, líderes de cultura organizacional y curiosos del futuro del trabajo.
 
 ---
 
@@ -53,8 +53,8 @@ Puedes preguntarle al bot sobre:
 
 Si quieres conversar directamente o explorar colaboraciones:
 
-- 💼 [LinkedIn](https://www.linkedin.com/in/alvarovargasherreros/)
-- 📧 alvaro.vargas.herreros@gmail.com
+- 💼 [LinkedIn](https://www.linkedin.com/in/alvargash90/)
+- 📧 alvargash90@gmail.com
 
 ---
 
