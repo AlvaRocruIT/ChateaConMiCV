@@ -13,7 +13,7 @@ async function sendMessage() {
   resBox.innerText = "Estoy reflexionando sobre eso... dame un momento.";
 
   try {
-    const response = await fetch("https://alvarovargas.app.n8n.cloud/webhook/ChateaConMiCV", {
+    const response = await fetch("https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: input })
