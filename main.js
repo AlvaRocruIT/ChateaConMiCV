@@ -64,3 +64,4 @@ async function sendMessage() {
 // - guardarHistorial()
 
 document.querySelector("button").addEventListener("click", sendMessage);
+window.sendMessage = sendMessage;
