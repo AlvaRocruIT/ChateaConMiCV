@@ -67,7 +67,6 @@ async function sendMessage() {
     resBox.innerText = updatedHistory;
     localStorage.setItem("chatHistory", updatedHistory);
   }
-}
 
 // Exponer la función para el botón en HTML
 window.sendMessage = sendMessage;
