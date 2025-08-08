@@ -3,8 +3,9 @@
 const resBox = document.getElementById("response");
 const inputBox = document.getElementById("userInput");
 
-// Puedes alternar entre modo test y producción
-const WEBHOOK_URL = "https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV"; // ← Usa webhook-test para desarrollo
+// 🌐 Alterna entre modo test y producción
+// const WEBHOOK_URL = "https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV"; // ← Modo desarrollo
+const WEBHOOK_URL = "https://alvarovargas.app.n8n.cloud/webhook/ChateaConMiCV"; // ← Modo producción (requiere flujo activo)
 
 async function sendMessage() {
   const input = inputBox.value.trim();
@@ -12,14 +13,14 @@ async function sendMessage() {
     resBox.innerText = "¿Podrías escribir una pregunta o comentario?";
     return;
   }
-  
- animarPensando();
+
+  animarPensando();
 
   try {
     const response = await fetch(WEBHOOK_URL, {
-      method: "POST",
+      method: "POST", // ← Asegúrate de que el webhook en n8n esté configurado para POST
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pregunta: input }) // ← Asegúrate que n8n lea "pregunta"
+      body: JSON.stringify({ pregunta: input }) // ← Este campo debe coincidir con lo que espera tu flujo en n8n
     });
 
     const data = await response.json();
@@ -41,6 +42,11 @@ function animarPensando() {
 function guardarHistorial(pregunta, respuesta) {
   console.log("Historial:", { pregunta, respuesta });
   // Aquí podrías guardar en localStorage, enviar a una API, etc.
+}
+
+// 🎯 Evento de envío
+document.querySelector("button").addEventListener("click", sendMessage);
+
 }
 
 // 🎯 Evento de envío
