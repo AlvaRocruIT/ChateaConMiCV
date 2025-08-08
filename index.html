@@ -51,13 +51,12 @@
 
   <div id="response"></div>
 
-  <!-- Respuesta actual -->
-<textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá la última respuesta del chatbot"></textarea>
+<!-- Respuesta actual -->
+<textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá la última respuesta del chatbot" style="margin-top: 1em;"></textarea>
 
 <!-- Historial comprimible -->
 <h3 style="margin-top: 1em;">Historial</h3>
-<button onclick="toggleHistory()">Mostrar historial</button>
-<textarea id="historyBox" rows="8" readonly style="display: none; margin-top: 0.5em;"></textarea>
+<textarea id="historyBox" rows="8" readonly style="display: none; margin-top: 0.5em;" onclick="toggleHistory()" placeholder="Haz clic aquí para ver el historial completo"></textarea>
   
  <!-- Vinculación al archivo JavaScript externo -->
   <script type="module" src="main.js"></script>
