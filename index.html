@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatea con el CV de Álvaro</title>
   <style>
     body {
@@ -32,13 +33,14 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    #response {
-      margin-top: 2em;
-      padding: 1em;
-      background-color: #fff;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      white-space: pre-wrap;
+    #currentResponse {
+      margin-top: 1em;
+      background-color: #eef6fc;
+      border: 1px solid #0078D4;
+    }
+    #historyBox {
+      margin-top: 0.5em;
+      display: none;
     }
   </style>
 </head>
@@ -46,19 +48,18 @@
   <h1>🤖 Chatea con mi CV</h1>
   <p>Pregúntame sobre experiencia, propósito, habilidades o proyectos. Estoy aquí para conversar contigo.</p>
 
-  <textarea id="userInput" rows="4" placeholder="¿Hola! 👋🏻 Bienvenid@ a este CV interactivo! ¿Qué te gustaría saber?"></textarea>
+  <!-- Entrada del usuario -->
+  <textarea id="userInput" rows="4" placeholder="¡Hola! 👋🏻 Bienvenid@ a este CV interactivo. ¿Qué te gustaría saber?"></textarea>
   <button onclick="sendMessage()">Enviar</button>
 
-  <div id="response"></div>
+  <!-- Respuesta actual del chatbot -->
+  <textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá lo que te responde ÁlvaroBot 🤖"></textarea>
 
-<!-- Respuesta actual -->
-<textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá la última respuesta del chatbot" style="margin-top: 1em;"></textarea>
+  <!-- Historial de conversación -->
+  <h3 style="margin-top: 1em;">Historial</h3>
+  <textarea id="historyBox" rows="8" readonly onclick="toggleHistory()" placeholder="Haz clic aquí para ver el historial completo"></textarea>
 
-<!-- Historial comprimible -->
-<h3 style="margin-top: 1em;">Historial</h3>
-<textarea id="historyBox" rows="8" readonly style="display: none; margin-top: 0.5em;" onclick="toggleHistory()" placeholder="Haz clic aquí para ver el historial completo"></textarea>
-  
- <!-- Vinculación al archivo JavaScript externo -->
+  <!-- Vinculación al archivo JavaScript externo -->
   <script type="module" src="main.js"></script>
 </body>
 </html>
