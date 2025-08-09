@@ -1,7 +1,8 @@
 // main.js
 
-const resBox = document.getElementById("response");
+// Elementos del DOM según la nueva estructura
 const inputBox = document.getElementById("userInput");
+const currentResponse = document.getElementById("currentResponse");
 const historyBox = document.getElementById("historyBox");
 
 // Función principal para enviar el mensaje
@@ -37,11 +38,13 @@ async function sendMessage() {
     historyBox.value = updatedHistory;
     localStorage.setItem("chatHistory", updatedHistory);
   }
+
+  // Limpiar input después de enviar
+  inputBox.value = "";
 }
 
 // Función para mostrar/ocultar el historial al hacer clic
 window.toggleHistory = () => {
-  const historyBox = document.getElementById("historyBox");
   historyBox.style.display = historyBox.style.display === "none" ? "block" : "none";
 };
 
