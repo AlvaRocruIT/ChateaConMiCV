@@ -5,6 +5,10 @@ const inputBox = document.getElementById("userInput");
 const currentResponse = document.getElementById("currentResponse");
 const historyBox = document.getElementById("historyBox");
 
+document.addEventListener("DOMContentLoaded", () => {
+  historyBox.value = localStorage.getItem("chatHistory") || "";
+});
+
 // Función principal para enviar el mensaje
 async function sendMessage() {
   const input = inputBox.value.trim();
@@ -43,11 +47,5 @@ async function sendMessage() {
   inputBox.value = "";
 }
 
-// Función para mostrar/ocultar el historial al hacer clic
-window.toggleHistory = () => {
-  historyBox.style.display = historyBox.style.display === "none" ? "block" : "none";
-};
-
 // Exponer funciones al HTML
 window.sendMessage = sendMessage;
-window.toggleHistory = toggleHistory;

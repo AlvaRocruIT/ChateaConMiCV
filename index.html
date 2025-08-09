@@ -53,11 +53,12 @@
   <button onclick="sendMessage()">Enviar</button>
 
   <!-- Respuesta actual del chatbot -->
-  <textarea id="currentResponse" rows="4" readonly placeholder></textarea>
+  <textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá la respuesta del bot"></textarea>
 
   <!-- Historial de conversación -->
   <h3 style="margin-top: 1em;">Historial</h3>
-  <textarea id="historyBox" rows="8" readonly onclick="toggleHistory()" placeholder="Haz clic aquí para ver el historial completo"></textarea>
+  <button id="toggleHistoryBtn" onclick="toggleHistory()">Mostrar/ocultar historial</button>
+  <textarea id="historyBox" rows="8" readonly placeholder="Pulsa el botón para mostrar/ocultar el historial"></textarea>
 
   <!-- Vinculación al archivo JavaScript externo -->
   <script type="module" src="main.js"></script>
