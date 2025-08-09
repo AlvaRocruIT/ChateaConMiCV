@@ -1,14 +1,9 @@
-// main.js
+// Referencias a los elementos del DOM
+const inputBox = document.getElementById("inputBox");
+const currentResponse = document.getElementById("currentResponse");
+const historyBox = document.getElementById("historyBox");
 
-const resBox = document.getElementById("response");
-const inputBox = document.getElementById("userInput");
-
-// Recuperar historial al cargar
-window.onload = () => {
-  const history = localStorage.getItem("chatHistory");
-  if (history) resBox.innerText = history;
-};
-
+// Función principal para enviar el mensaje
 async function sendMessage() {
   const input = inputBox.value.trim();
   if (!input) {
@@ -18,7 +13,6 @@ async function sendMessage() {
 
   const previous = localStorage.getItem("chatHistory") || "";
   currentResponse.value = "🤖 Pensando...";
-  historyBox.value = previous;
 
   try {
     const response = await fetch("https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV", {
@@ -44,30 +38,13 @@ async function sendMessage() {
   }
 }
 
-  const previous = localStorage.getItem("chatHistory") || "";
-  resBox.innerText = previous + `\n👤 Tú: ${input}\n🤖 Pensando...\n`;
+// Función para mostrar/ocultar el historial al hacer clic
+function toggleHistory() {
+  const isHidden = historyBox.style.display === "none";
+  historyBox.style.display = isHidden ? "block" : "none";
+}
 
-  try {
-    const response = await fetch("https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input })
-    });
-
-    const data = await response.json();
-    const reply = data.respuesta || "No se recibió respuesta.";
-    const updatedHistory = previous + `\n👤 Tú: ${input}\n🤖 ÁlvaroBot: ${reply}\n`;
-
-    resBox.innerText = updatedHistory;
-    localStorage.setItem("chatHistory", updatedHistory);
-  } catch (error) {
-    const fallback = "Ups, algo no salió bien. ¿Quieres intentar con otra pregunta?";
-    const updatedHistory = previous + `\n👤 Tú: ${input}\n🤖 ÁlvaroBot: ${fallback}\n`;
-
-    resBox.innerText = updatedHistory;
-    localStorage.setItem("chatHistory", updatedHistory);
-  }
-
-// Exponer la función para el botón en HTML
+// Exponer funciones al HTML
 window.sendMessage = sendMessage;
+window.toggleHistory = toggleHistory;
 
