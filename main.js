@@ -40,10 +40,10 @@ async function sendMessage() {
 }
 
 // Función para mostrar/ocultar el historial al hacer clic
-function toggleHistory() {
-  const isHidden = historyBox.style.display === "none";
-  historyBox.style.display = isHidden ? "block" : "none";
-}
+window.toggleHistory = () => {
+  const historyBox = document.getElementById("historyBox");
+  historyBox.style.display = historyBox.style.display === "none" ? "block" : "none";
+};
 
 // Exponer funciones al HTML
 window.sendMessage = sendMessage;
