@@ -1,0 +1,49 @@
+En Fintual hacemos que las inversiones sean simples, transparentes y al alcance de todas las personas.
+Nacimos con la idea de que cualquiera, sin importar el dinero que tenga, pueda invertir bien sus ahorros y hacer crecer su patrimonio. La mitad de nuestros clientes dice que antes de Fintual no tenía experiencia administrando su dinero, por eso el reto es mostrarles cómo pueden hacerlo y ayudarles a convertirlo en un hábito.
+Además, somos la primera startup en Hispanoamérica en lanzar sus propios fondos para invertir.
+
+- People Experience Partner- 
+  • En People trabajamos con mentalidad de producto para cuidar la experiencia de cada persona: diseñamos procesos, iteramos, pedimos feedback y cuestionamos lo que hacemos mientras Fintual crece. Por eso, buscamos a alguien que entienda muy bien cómo funciona People y que vea en la tecnología una forma de multiplicar impacto.
+  • Además de acompañar al negocio, el equipo de People lidera la adopción de AI en Fintual desde el lado cultural. Queremos que nuestras propias prácticas sean referencia, así que durante el proceso evaluaremos tu potencial y skills en AI.
+  • Debes vivir en Santiago.
+
+Esta postulación estará abierta hasta el 11 de agosto.
+  En tu día a día vas a:
+    • Acercarte a los equipos para entender el negocio de Fintual desde adentro.
+    • Acompañar el rol de cada manager para impactar el desarrollo profesional de las personas y el logro de objetivos de cada squad.
+    • Trabajar con hiring managers para mejorar la experiencia de contratación, tanto para el equipo como para quienes postulan.
+    • Ser builder: Diseñar y automatizar procesos usando AI con herramientas como n8n, supabase, lovable o creación de agentes.
+    • Analizar datos para proponer mejoras concretas en cómo trabajamos y tomamos decisiones.
+    • Ser parte de proyectos relacionados con performance, feedback, engagement, training, compensaciones y adopción de AI.
+
+  Qué esperamos de ti?
+    • Sabes cómo funcionan los procesos de People end to end porque tienes más de 5 años de experiencia.
+    • Te interesas por entender el negocio y tienes una mentalidad estratégica.
+    • Has experimentado con herramientas de AI por tu cuenta, más allá de hablar con ChatGPT.
+    • Tienes alta autonomía y high agency pero no temes hacer preguntas si no entiendes algo.
+    • Has liderado proyectos de cero con éxito con buen análisis de métricas e iteraciones.
+    • Tienes una buena noción de la ley laboral chilena.
+    • Idealmente, has trabajado en startups o en empresas de rápido crecimiento.
+
+  Compensación salarial
+    • Este cargo parte de una base de 2.7 MM CLP líquidos.
+  
+  El proceso de Postulación
+    • Screening cultural (20 min): Conversación con alguien del equipo de People para conocerte
+    • Entrevista técnica (60 min): Preguntas sobre situaciones hipotéticas que podrías enfrentar y un ejercicio con herramientas de AI
+    • Conversación con una líder de Fintual
+    • Visita a la oficina y referencias
+    • Oferta
+    • Es posible que modifiquemos alguna etapa si lo vemos necesario
+
+  Algunos de nuestros beneficios:
+    • 7 semanas de vacaciones al año, debes tomarte mínimo 5 (sí, leíste bien).
+    • Plan de Stock Options después de 1 año.
+    • Seguro de gastos médicos.
+    • Desayuno y almuerzo cuando vayas a la oficina.
+    • Martes sin reuniones.
+    • Licencia parental de 12 semanas para la persona no gestante.
+    • Te pediremos venir a la ofi 2 días a la semana si vives a menos de 1 hora de distancia.
+    • Siempre podrás coordinar con tu equipo el work form anywhere (conectándote a +/- 1 hr de Chile o México).
+
+Fintual fue incubada por la mayor aceleradora de negocios del mundo Y Combinator en 2018, por el programa dy/dx de la Universidad de Stanford y tiene como socios inversionistas a Kaszek, Hi Ventures (antes ALLVP) y Sequoia (los primeros inversores en Google, Whatsapp, Instagram, Stripe, PayPal, Linkedin, entre otras).
