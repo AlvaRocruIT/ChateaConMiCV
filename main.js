@@ -1,5 +1,3 @@
-// main.js
-
 // Elementos del DOM
 const inputBox = document.getElementById("userInput");
 const currentResponse = document.getElementById("currentResponse");
@@ -40,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   historyBox.style.display = "none";
 });
 
-// Enviar mensaje
 async function sendMessage() {
   const input = inputBox.value.trim();
   if (!input) {
@@ -82,7 +79,7 @@ async function sendMessage() {
     if (msg.includes("webhook") || msg.includes("404")) {
       if (endpoint === PROD_URL) {
         hint =
-          "Activa el workflow en n8n (URL de producción). Para pruebas usa ?env=test y pulsa ‘Execute workflow’ en el canvas antes de enviar.";
+          "Activa el workflow en n8n (producción). Para pruebas usa ?env=test y pulsa ‘Execute workflow’ en n8n antes de enviar.";
       } else {
         hint =
           "Pulsa ‘Execute workflow’ en n8n para habilitar temporalmente el webhook de prueba (?env=test).";
@@ -108,6 +105,5 @@ function toggleHistory() {
   if (btn) btn.textContent = isHidden ? "Ocultar historial" : "Mostrar historial";
 }
 
-// Exponer funciones al HTML
 window.sendMessage = sendMessage;
 window.toggleHistory = toggleHistory;
