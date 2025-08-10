@@ -1,7 +1,7 @@
+[
   { "q": "¿Cómo llegaste al mundo del Desarrollo Organizacional?", "a": "Luego de mi salida de la FACH en 2020, decidí reinventarme, asique comencé mi magister en Dirección de Personas y Organizaciones, donde un profesor, amigo y mentor me ofreció trabajar en su consultora." },
   { "q": "¿Qué te motivó a especializarte en People Experience?", "a": "El 2015, durante mi etapa de pregrado, viví una pasantía en la Subgerencia de la Felicidad en BancoEstado MicroEmpresas. Ese fue mi primer acercamiento y desde ahí lo ví como un propósito"}
-  { "q": "¿Cuál es tu propósito profesional?", "a": ""}
-  { "q": "", "a": "Sentirme parte de un lugar, validarme como alguien digno de resolver y crecer profesionalmente."}
+  { "q": "¿Cuál es tu propósito profesional?", "a": "Sentirme parte de un lugar, validarme como alguien digno de resolver y crecer profesionalmente."}
   { "q": "¿Qué te diferencia como profesional de DO?", "a": "La diversidad de culturas, contextos, estructuras y propósitos me ha hecho crecer como un profesional altamente adaptable."}
   { "q": "¿Cómo defines una cultura centrada en las personas?", "a": "Una cultura que declare que el cuidado de las personas es el activo más estratégico para desarrollar capacidades ndividuales y conjuntas en torno a un propósito compartido."}
   { "q": "¿Qué significa para ti tener mentalidad de crecimiento?", "a": "Nadie tiene un manual prescrito de cómo hacer las cosas, entonces mentalidad de creciminto es desafiarnos para crear cosas únicas para la realidad única de las necesidades más únicas."}
@@ -14,13 +14,10 @@
   { "q": "¿Cómo acompañaste a líderes en procesos de transformación?", "a": "Me tocó conducir sesiones 1:1 para adelantar posibles incertidumbres del equipo, focos de resistencia, promotores y objetivos compartidos."}
   { "q": "¿Cómo usaste metodologías ágiles en proyectos de DO?", "a": "Nos tocó diseñar células interdisciplinarias para proyectos organizacionales. A veces, colaboradores con menor seniority lideraban células según su área de interés y expertiz en un punto específico."}
   { "q": "¿Cuál ha sido un proyecto del que te sientas especialmente orgulloso?", "a": "Diseñé un proyecto de rutas de desarrollo individual en Cervecería Kunstmann que integraba tecnologías, toma de deciosiones data-driven y acompañamiento, que al día de hoy sigue vigente"}
-  { "q": "¿Cómo enfrentaste resistencia al cambio cultural?", "a": ""}
-  { "q": "", "a": "Canales de comunicación efectivos, anticipar posibles focos de incertidumbre y resistencia, definir promotores y remarcar hitos y logros."}
+  { "q": "¿Cómo enfrentaste resistencia al cambio cultural?", "a": "Canales de comunicación efectivos, anticipar posibles focos de incertidumbre y resistencia, definir promotores y remarcar hitos y logros."} 
   { "q": "¿Cómo mejoraste la fidelización del talento?", "a": "Fue un logro multifactorial. Entre la pandemia, co-creación de proyectos compartidos, estímulos a talento de alto potencial y desempeño y sesiones 1:1."}
-  { "q": "¿Qué resultados concretos lograste en tu último rol?", "a": ""}
-  { "q": "", "a": "Tracé una ruta digital de desarrollo personalizado que conectaba el sistema de desempeño, con el LMS, con la plataforma Codify y otras gestiones off-platform."}
-  { "q": "¿Qué herramientas tecnológicas usas en tu trabajo diario?", "a": ""}
-  { "q": "", "a": "En mi experiencia profesional usé diversos HRIS y sistemas complementarios comoOracle Peoplesoft, Workplace, ubits, LMS Masconsultores, Codify, ILIAS, Rankmi, Buk. Ahora, como postulante, uso mucho linkedin, algo de Notion, Miro, tengo automatizaciones via Make, n8n, un repositorio de Github y harto Office/drive."}
+  { "q": "¿Qué resultados concretos lograste en tu último rol?", "a": "Tracé una ruta digital de desarrollo personalizado que conectaba el sistema de desempeño, con el LMS, con la plataforma Codify y otras gestiones off-platform."}
+  { "q": "¿Qué herramientas tecnológicas usas en tu trabajo diario?", "a": "En mi experiencia profesional usé diversos HRIS y sistemas complementarios comoOracle Peoplesoft, Workplace, ubits, LMS Masconsultores, Codify, ILIAS, Rankmi, Buk. Ahora, como postulante, uso mucho linkedin, algo de Notion, Miro, tengo automatizaciones via Make, n8n, un repositorio de Github y harto Office/drive."}
   { "q": "¿Cómo has automatizado procesos de HR o DO?", "a": "Mayoritariamente como cliente, el mayor avance en esta materia fue implementar Codify desde etapas más tempranas y en menor medida automatización de encuestas. Ahora uso automatizaciones para propósitos personales de empleabilidad."}
   { "q": "¿Qué experiencia tienes con herramientas como Notion, Zapier, Airtable o n8n?", "a": "Uso harto Notion, no uso Airtable pero sí conozco bien Monday y Trello. En vez de Zapier, uso Make y todavía no uso n8n."}
   { "q": "¿Has usado dashboards para visualizar métricas de engagement o performance?", "a": "Sí, especialmente en Kunstmann. Descargábamos reportes desde peoplesoft, y hacíamos los análisis por equipo."}
@@ -31,7 +28,7 @@
   { "q": "¿Cómo defines una cultura de feedback efectivo?", "a": "Básicamente que pierda el miedo a tratar conversaciones difíciles. Estas son fundamentales para anticipar explosiones y crisis. "}
   { "q": "¿Qué significa “liderazgo con propósito” para ti?", "a": "Liderazgo sin propósito es realzar el ego, liderazgo con propósito es visión compartida."}
   { "q": "¿Cómo fomentas el aprendizaje continuo en los equipos?", "a": "Me encanta la iniciativa de #ai-week. Creo que integrar rituales fuera de rutina fomenta el desafiarse en materias que debiésemos estar actualizados."}
-  { "q": ¿Cómo gestionas el error dentro de una cultura de seguridad psicológica?"", "a": "Entenderlo como el mejor ejercicio de aprendizaje. Creo que es válido exponer al 'errado' siempre y cuando sea en un contexto académico, de feedback, rescatando el aprendizaje y haciéndolo partícipe de la solución. Jamás exponer por humillar."}
+  { "q": "¿Cómo gestionas el error dentro de una cultura de seguridad psicológica?", "a": "Entenderlo como el mejor ejercicio de aprendizaje. Creo que es válido exponer al 'errado' siempre y cuando sea en un contexto académico, de feedback, rescatando el aprendizaje y haciéndolo partícipe de la solución. Jamás exponer por humillar."}
   { "q": "¿Qué habilidades blandas te caracterizan?", "a": "Viene muy de cerca la recomendación. Sí puedo decir que hay valores que me movilizan: Mentalidad de crecimiento, colaboración con propósito, adaptabilidad, innovación cultural y vocación por el desarrollo humano."}
   { "q": "¿Cómo trabajas la cohesión en equipos diversos?", "a": "Rerspetando el espacio personal, entendiendo la diversidad como algo natural y promoviendo el vínculo en un ambiente de propósito compartido."}
   { "q": "¿Qué rol juegas en la construcción de climas positivos?", "a": "Soy bien analítico en este aspecto, quizás no soy el más activo ni el más extrovertido, pero sí me gusta mucho observar, entender y apoyar."}
@@ -42,3 +39,4 @@
   { "q": "¿Cómo mantienes tu motivación y energía?", "a": "Entreno en las mañanas, me preparo para situaciones de alta carga adaptativa, comunico harto. respeto y hago respetar espacios y tiempos personales"}
   { "q": "¿Cuál ha sido tu error favorito? ¿Qué aprendiste?", "a": "Masconsultores. Me sentí privilegiado de trabajar en el equipo, lamentablemente no tenía la madurez y el contexto suficiente para desempeñarme de manera óptima, pero fue mi motivador y puerta de entrada al mundo tech."}
   { "q": "¿Qué tipo de desafíos te entusiasman más?", "a": "Los que declaran abiertamente el propósito, adelantan que voy a aprender muchísimo, aprovechan los talentos que ya traigo y además me permitan interactuar con gente muy pro en sus áreas."}
+]
