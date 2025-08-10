@@ -30,6 +30,7 @@ Aquí combino:
 - [OpenAI](https://openai.com/) para generar respuestas inteligentes.
 - [GitHub Pages](https://pages.github.com/) para alojar el frontend.
 - HTML + JavaScript para la interfaz conversacional.
+- [cursor](https://cursor.com) Para lamejor toma de decisiones.
 
 ---
 
