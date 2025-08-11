@@ -2,6 +2,7 @@
 const inputBox = document.getElementById("userInput");
 const currentResponse = document.getElementById("currentResponse");
 const historyBox = document.getElementById("historyBox");
+const sendBtn = document.getElementById("sendBtn");
 
 const PROD_URL = "https://alvarovargas.app.n8n.cloud/webhook/ChateaConMiCV";
 const TEST_URL = "https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV";
@@ -12,7 +13,7 @@ function getPreferredEndpoint() {
   return env === "test" ? TEST_URL : PROD_URL;
 }
 
-async function postToEndpoint(endpoint, payload, timeoutMs = 20000) {
+async function postToEndpoint(endpoint, payload, timeoutMs = 45000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -21,12 +22,11 @@ async function postToEndpoint(endpoint, payload, timeoutMs = 20000) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
       signal: controller.signal,
+      mode: "cors",
     });
     const raw = await response.text();
     let data = null;
-    try {
-      data = JSON.parse(raw);
-    } catch (_) {}
+    try { data = JSON.parse(raw); } catch (_) {}
     return { response, data, raw };
   } finally {
     clearTimeout(timeoutId);
@@ -47,6 +47,7 @@ async function sendMessage() {
 
   const previous = localStorage.getItem("chatHistory") || "";
   currentResponse.value = "🤖 Pensando...";
+  if (sendBtn) sendBtn.disabled = true;
 
   const payload = { text: input };
   let endpoint = getPreferredEndpoint();
@@ -93,9 +94,10 @@ async function sendMessage() {
     currentResponse.value = fallback;
     historyBox.value = updatedHistory;
     localStorage.setItem("chatHistory", updatedHistory);
+  } finally {
+    inputBox.value = "";
+    if (sendBtn) sendBtn.disabled = false;
   }
-
-  inputBox.value = "";
 }
 
 function toggleHistory() {
