@@ -12,9 +12,7 @@
       max-width: 700px;
       margin: auto;
     }
-    h1 {
-      color: #333;
-    }
+    h1 { color: #333; }
     textarea {
       width: 100%;
       padding: 1em;
@@ -38,18 +36,15 @@
       background-color: #eef6fc;
       border: 1px solid #0078D4;
     }
-    #historyBox {
-      margin-top: 0.5em;
-      display: none;
-    }
+    #historyBox { margin-top: 0.5em; display: none; }
   </style>
 </head>
 <body>
   <h1>🤖 Chatea con mi CV</h1>
   <p>Pregúntame sobre experiencia, propósito, habilidades o proyectos.</p>
 
-  <textarea id="userInput" rows="4" placeholder="¡Hola! 👋🏻 ¿Qué te gustaría saber?"></textarea>
-  <button onclick="sendMessage()">Enviar</button>
+  <textarea id="userInput" rows="4" placeholder="¡Hola! 👋🏻 ¿Qué te gustaría saber?" autocomplete="off" autocapitalize="none" spellcheck="false"></textarea>
+  <button id="sendBtn" onclick="sendMessage()">Enviar</button>
 
   <textarea id="currentResponse" rows="4" readonly placeholder="Aquí aparecerá la respuesta del bot"></textarea>
 
