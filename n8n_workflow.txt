@@ -105,7 +105,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -48,
+        -256,
         0
       ],
       "id": "62f5ceee-a0c4-4918-9bec-cd1a8c6bf184",
@@ -127,7 +127,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        304,
+        96,
         0
       ],
       "id": "3951832f-fb12-4f7a-9f8a-2a8e0eceef6d",
@@ -173,7 +173,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const question = String($node[\"Carry Text\"].json.text || \"\").toLowerCase();\nconst qaArray = $input.all().map(i => i.json);\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(it) {\n  const t = `${it.q || \"\"} ${it.a || \"\"}`.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nif (!question || !qaArray.length) {\n  return [{ json: { qaSelected: [], qaSelectedString: \"\", topScore: 0 } }];\n}\n\nconst ranked = qaArray\n  .map(it => ({ ...it, _score: score(it) }))\n  .sort((a, b) => b._score - a._score)\n  .slice(0, 3)\n  .map(it => ({\n    q: String(it.q || \"\").trim(),\n    a: String(it.a || \"\").replace(/\\s+/g, \" \").trim().slice(0, 280),\n    _score: it._score\n  }));\n\nconst qaSelectedString = ranked\n  .map((it, i) => `Q${i + 1}: ${it.q}\\nA${i + 1}: ${it.a}`)\n  .join(\"\\n\\n\");\n\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: ranked[0]?._score || 0 } }];"
+        "jsCode": "const qaItems = $input.all();\nconst question = String(qaItems[0]?.json?.text || \"\").toLowerCase();\nconst qaArray = qaItems.map(i => i.json);\n\nif (!question || !qaArray.length) {\n  return [{ json: { qaSelected: [], qaSelectedString: \"\", topScore: 0 } }];\n}\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(it) {\n  const t = `${it.q || \"\"} ${it.a || \"\"}`.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nconst ranked = qaArray\n  .map(it => ({ ...it, _score: score(it) }))\n  .sort((a, b) => b._score - a._score)\n  .slice(0, 3)\n  .map(it => ({\n    q: String(it.q || \"\").trim(),\n    a: String(it.a || \"\").replace(/\\s+/g, \" \").trim().slice(0, 280),\n    _score: it._score\n  }));\n\nconst qaSelectedString = ranked\n  .map((it, i) => `Q${i + 1}: ${it.q}\\nA${i + 1}: ${it.a}`)\n  .join(\"\\n\\n\");\n\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: ranked[0]?._score || 0 } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -186,12 +186,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const item = $input.item;\n\nconst question = String($node[\"Webhook\"].json.text || \"\").toLowerCase();\nconst cvFull = String($json.cv || \"\");\nconst paragraphs = cvFull.split(/\\n{2,}/);\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(p) {\n  const t = p.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nconst top = paragraphs\n  .map(p => ({ p: p.replace(/\\s+/g, \" \").trim(), s: score(p) }))\n  .sort((a, b) => b.s - a.s)\n  .slice(0, 4)\n  .map(x => x.p);\n\nitem.json.cvRecortado = top.join(\"\\n\\n\").slice(0, 2000);\nreturn item;"
+        "jsCode": "const item = $input.item;\n\nconst question = String($node[\"Carry Text\"].json.text || \"\").toLowerCase();\nconst cvFull = String($json.cv || \"\");\nif (!cvFull) {\n  item.json.cvRecortado = \"\";\n  return item;\n}\n\nconst paragraphs = cvFull.split(/\\n{2,}/);\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(p) {\n  const t = p.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nconst top = paragraphs\n  .map(p => ({ p: p.replace(/\\s+/g, \" \").trim(), s: score(p) }))\n  .sort((a, b) => b.s - a.s)\n  .slice(0, 4)\n  .map(x => x.p);\n\nitem.json.cvRecortado = top.join(\"\\n\\n\").slice(0, 2000);\nreturn item;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        144,
+        -64,
         0
       ],
       "id": "ce713b20-1562-4a53-884c-bb3956bbf65a",
@@ -254,7 +254,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -368,
+        -576,
         0
       ],
       "id": "f3fb2ff6-0a27-4ec7-917f-eb6ada5e6303",
@@ -291,7 +291,7 @@
             {
               "id": "98eeb138-49e3-4584-8563-715c8bcde7d4",
               "name": "text",
-              "value": "json.text",
+              "value": "=$json.text",
               "type": "string"
             }
           ]
@@ -301,11 +301,34 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -208,
+        -416,
         0
       ],
       "id": "e5493bd6-9fb5-4567-a079-ffac43a653d0",
       "name": "Carry Text"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d11f7b3d-4d53-4799-af87-6925e325f1d8",
+              "name": "text",
+              "value": "=$node[\"Carry Text\"].json.text",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        0
+      ],
+      "id": "60ea1ab1-d020-4d86-aa8b-6125f8a2cbc0",
+      "name": "Attach Text"
     }
   ],
   "pinData": {},
@@ -347,7 +370,7 @@
       "main": [
         [
           {
-            "node": "Select QA",
+            "node": "Attach Text",
             "type": "main",
             "index": 0
           }
@@ -419,13 +442,35 @@
           }
         ]
       ]
+    },
+    "Carry Text": {
+      "main": [
+        [
+          {
+            "node": "Request cv.txt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Text": {
+      "main": [
+        [
+          {
+            "node": "Select QA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "78e39f04-6860-41df-aee3-56917a9bab79",
+  "versionId": "500a37a5-bbd4-443e-99bf-d2ad5dce8a1f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b94a1badad5c74bb198fcbd6d858de30c64abe740262d6937ab4715e01bb04ae"
