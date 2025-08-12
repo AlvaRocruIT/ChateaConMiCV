@@ -6,7 +6,7 @@
         "promptType": "define",
         "text": "=={{$json.compiledContext}}",
         "options": {
-          "systemMessage": "Actúas como un asistente tipo chat interactivo que representa a Álvaro. Usa SOLO el CONTEXTO – FUENTES para hechos. La “Descripción del cargo” es contexto NO factual (solo tono/enfoque).\n\nReglas:\n- Si la info no está en las fuentes, responde: “No encontré esa información en mis fuentes, ¿te gustaría reorientar la pregunta?.”\n- Estilo: español cercano y ameno; 3–6 líneas o viñetas breves. Sin prefacios ni meta-comentarios.\n- Si la pregunta es ambigua, pide UNA aclaración breve antes de responder.\n- Prioridad de fuentes: Q&A > CV. No inventes ni completes datos.\n- Cuando corresponda, cita fuente al final: (Q&A) o (CV).\n- Responde solo texto plano.",
+          "systemMessage": "Actúas como un asistente tipo chat interactivo que representa a Álvaro. Usa SOLO el CONTEXTO – FUENTES para hechos. La “Descripción del cargo” es contexto NO factual (solo tono/enfoque).\n\nReglas:\nUsa SOLO el CONTEXTO – FUENTES. Prioridad: Q&A > CV. No inventes.\nSi [SCORE] == 0: pide UNA aclaración breve (p. ej.: “¿Qué aspecto te interesa: experiencia, habilidades o proyectos?”).\nSi [SCORE] >= 1: responde usando el contexto; si faltan datos, di: “No encuentro esa información en mis fuentes.”\nEstilo: español claro y cercano; 3–6 líneas o viñetas breves; sin prefacios ni meta‑comentarios.\nCita la fuente cuando aplique: (Q&A) o (CV).\nResponde solo texto plano.\n",
           "returnIntermediateSteps": false
         }
       },
@@ -26,7 +26,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={ \"respuesta\": \"$json.respuesta || $json.text || $json.message || $json.content || 'No encuentro esa información en mis fuentes.'\" }",
+        "responseBody": "{ \"respuesta\": \"{{$json.respuesta}}\" }",
         "options": {
           "responseCode": 200,
           "responseHeaders": {
@@ -173,7 +173,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const question = String($node[\"Webhook\"].json.text || \"\").toLowerCase();\nconst qaArray = $input.all().map(i => i.json); // cada item es {q,a}\n\nconst words = Array.from(new Set(question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean))).slice(0,12);\nfunction score(it){ const t = `${it.q||\"\"} ${it.a||\"\"}`.toLowerCase(); return words.reduce((s,w)=>s+(t.includes(w)?1:0),0); }\n\nconst ranked = qaArray\n  .map(it => ({...it, _score: score(it)}))\n  .sort((a,b)=>b._score - a._score)\n  .slice(0,3)\n  .map(it => ({ q: String(it.q||\"\").trim(), a: String(it.a||\"\").replace(/\\s+/g,\" \").trim().slice(0,280) }));\n\nconst qaSelectedString = ranked.map((it,i)=>`Q${i+1}: ${it.q}\\nA${i+1}: ${it.a}`).join(\"\\n\\n\");\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: (ranked[0]?._score||0) } }];"
+        "jsCode": "const question = String($node[\"Webhook\"].json.text || \"\").toLowerCase();\nconst qaArray = $input.all().map(i => i.json);\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(it) {\n  const t = `${it.q || \"\"} ${it.a || \"\"}`.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nif (!qaArray.length) {\n  return [{ json: { qaSelected: [], qaSelectedString: \"\", topScore: 0, debug: { question, items: 0 } } }];\n}\n\nconst ranked = qaArray\n  .map(it => ({ ...it, _score: score(it) }))\n  .sort((a, b) => b._score - a._score)\n  .slice(0, 3)\n  .map(it => ({\n    q: String(it.q || \"\").trim(),\n    a: String(it.a || \"\").replace(/\\s+/g, \" \").trim().slice(0, 280),\n    _score: it._score\n  }));\n\nconst qaSelectedString = ranked.map((it, i) => `Q${i+1}: ${it.q}\\nA${i+1}: ${it.a}`).join(\"\\n\\n\");\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: ranked[0]?._score || 0 } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -204,7 +204,13 @@
             {
               "id": "459fddf6-4adb-4bc3-8b7c-d426742d5dc6",
               "name": "compiledContext",
-              "value": "=[CV] {{$node[\"Recortar CV\"].json.cvRecortado || $node[\"Request cv.txt\"].json.cv}}\n[QAS] QAS: {{$node[\"Select QA\"].json.qaSelectedString || \"\"}}\n[ROL (NO FACTUAL)] {{($node[\"Request Role.txt\"].json.role || \"\").substring(0,1200)}}\n[PREGUNTA] {{$node[\"Webhook\"].json.text || \"\"}}",
+              "value": "=compiledContext (Expression): \n[CV] {{$node[\"Recortar CV\"].json.cvRecortado || $node[\"Request cv.txt\"].json.cv}} \n[QAS] {{$node[\"Select QA\"].json.qaSelectedString || \"\"}} \n[ROL (NO FACTUAL)] {{($node[\"Request Role.txt\"].json.role || \"\").substring(0,1200)}} [PREGUNTA] {{$node[\"Webhook\"].json.text || \"\"}}\n[SCORE] {{$node[\"Select QA\"].json.topScore || 0}}",
+              "type": "string"
+            },
+            {
+              "id": "e56a2d30-f59e-434e-a950-76cc17330792",
+              "name": "SCORE",
+              "value": "={{$node[\"Select QA\"].json.topScore || 0}}",
               "type": "string"
             }
           ]
@@ -262,7 +268,7 @@
             {
               "id": "f001d721-4013-4fcc-92dc-5accb585ce8b",
               "name": "respuesta",
-              "value": "$json.respuesta || $json.text || $json.message || $json.content || 'No encuentro esa información en mis fuentes.'",
+              "value": " $json.text || $json.message || $json.content || \"No encuentro esa información en mis fuentes.\"",
               "type": "string"
             }
           ]
@@ -396,7 +402,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "cdf1eb07-207e-4c03-90c6-2731aefb4e06",
+  "versionId": "d21c6ec5-8544-47e1-80a2-5bf621e61e23",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b94a1badad5c74bb198fcbd6d858de30c64abe740262d6937ab4715e01bb04ae"
