@@ -1,0 +1,406 @@
+{
+  "name": "ChateaConMiCV",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=={{$json.compiledContext}}",
+        "options": {
+          "systemMessage": "Actúas como un asistente tipo chat interactivo que representa a Álvaro. Usa SOLO el CONTEXTO – FUENTES para hechos. La “Descripción del cargo” es contexto NO factual (solo tono/enfoque).\n\nReglas:\n- Si la info no está en las fuentes, responde: “No encontré esa información en mis fuentes, ¿te gustaría reorientar la pregunta?.”\n- Estilo: español cercano y ameno; 3–6 líneas o viñetas breves. Sin prefacios ni meta-comentarios.\n- Si la pregunta es ambigua, pide UNA aclaración breve antes de responder.\n- Prioridad de fuentes: Q&A > CV. No inventes ni completes datos.\n- Cuando corresponda, cita fuente al final: (Q&A) o (CV).\n- Responde solo texto plano.",
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "061c9612-c4a9-4c02-835b-77c320f2d3ae",
+      "name": "AI Agent",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "notesInFlow": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"respuesta\": \"$json.respuesta || $json.text || $json.message || $json.content || 'No encuentro esa información en mis fuentes.'\" }",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "https://alvarocruit.github.io"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1488,
+        0
+      ],
+      "id": "5be25c00-9b05-432c-83af-89f09c90096d",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "notesInFlow": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {
+          "maxTokens": 250,
+          "responseFormat": "text",
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1008,
+        192
+      ],
+      "id": "adbf885c-93bf-4319-8eb3-6de820ba24f4",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "eH4hNwEbYrV6aQkQ",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/AlvaRocruIT/ChateaConMiCV/main/data/cv.txt",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "cv"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "62f5ceee-a0c4-4918-9bec-cd1a8c6bf184",
+      "name": "Request cv.txt",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/AlvaRocruIT/ChateaConMiCV/main/data/qa.json",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        304,
+        0
+      ],
+      "id": "3951832f-fb12-4f7a-9f8a-2a8e0eceef6d",
+      "name": "Request Q&A.json",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/AlvaRocruIT/ChateaConMiCV/main/data/role.txt",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "role"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        656,
+        0
+      ],
+      "id": "4299bef9-ba08-47e1-9c60-584edde88b97",
+      "name": "Request Role.txt",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## I'm a note:\n\n$body = @{ text = \"hola\" } | ConvertTo-Json\nInvoke-RestMethod -Method POST -Uri 'https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV' -ContentType 'application/json' -Body $body"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "3364e3a3-6cea-44c2-b24e-4e4402f70b52",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "const question = String($node[\"Webhook\"].json.text || \"\").toLowerCase();\nconst qaArray = $input.all().map(i => i.json); // cada item es {q,a}\n\nconst words = Array.from(new Set(question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean))).slice(0,12);\nfunction score(it){ const t = `${it.q||\"\"} ${it.a||\"\"}`.toLowerCase(); return words.reduce((s,w)=>s+(t.includes(w)?1:0),0); }\n\nconst ranked = qaArray\n  .map(it => ({...it, _score: score(it)}))\n  .sort((a,b)=>b._score - a._score)\n  .slice(0,3)\n  .map(it => ({ q: String(it.q||\"\").trim(), a: String(it.a||\"\").replace(/\\s+/g,\" \").trim().slice(0,280) }));\n\nconst qaSelectedString = ranked.map((it,i)=>`Q${i+1}: ${it.q}\\nA${i+1}: ${it.a}`).join(\"\\n\\n\");\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: (ranked[0]?._score||0) } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "id": "2de7c682-983c-4b91-ad17-d69b72687b58",
+      "name": "Select QA"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.item;\n\nconst question = String(item.json.text || \"\").toLowerCase();\nconst cvFull = String($json.cv || \"\");\nconst paragraphs = cvFull.split(/\\n{2,}/);\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(p) {\n  const t = p.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nconst top = paragraphs\n  .map(p => ({ p: p.replace(/\\s+/g, \" \").trim(), s: score(p) }))\n  .sort((a, b) => b.s - a.s)\n  .slice(0, 4)\n  .map(x => x.p);\n\nitem.json.cvRecortado = top.join(\"\\n\\n\").slice(0, 2000);\nreturn item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        0
+      ],
+      "id": "ce713b20-1562-4a53-884c-bb3956bbf65a",
+      "name": "Recortar CV"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "459fddf6-4adb-4bc3-8b7c-d426742d5dc6",
+              "name": "compiledContext",
+              "value": "=[CV] {{$node[\"Recortar CV\"].json.cvRecortado || $node[\"Request cv.txt\"].json.cv}}\n[QAS] QAS: {{$node[\"Select QA\"].json.qaSelectedString || \"\"}}\n[ROL (NO FACTUAL)] {{($node[\"Request Role.txt\"].json.role || \"\").substring(0,1200)}}\n[PREGUNTA] {{$node[\"Webhook\"].json.text || \"\"}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        0
+      ],
+      "id": "eba88b54-3427-4f0e-bf05-e4a80e300fba",
+      "name": "Build context"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ChateaConMiCV",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "https://alvarocruit.github.io",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "https://alvarocruit.github.io"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "f3fb2ff6-0a27-4ec7-917f-eb6ada5e6303",
+      "name": "Webhook",
+      "webhookId": "0a0f1b8f-da1f-4d26-ba86-e5e229e1e48c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f001d721-4013-4fcc-92dc-5accb585ce8b",
+              "name": "respuesta",
+              "value": "$json.respuesta || $json.text || $json.message || $json.content || 'No encuentro esa información en mis fuentes.'",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1312,
+        0
+      ],
+      "id": "77cedf59-098c-4fb6-859f-1826871fea47",
+      "name": "Normalize Outputs"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Normalize Outputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request cv.txt": {
+      "main": [
+        [
+          {
+            "node": "Recortar CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Q&A.json": {
+      "main": [
+        [
+          {
+            "node": "Select QA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Role.txt": {
+      "main": [
+        [
+          {
+            "node": "Build context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select QA": {
+      "main": [
+        [
+          {
+            "node": "Request Role.txt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recortar CV": {
+      "main": [
+        [
+          {
+            "node": "Request Q&A.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build context": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Request cv.txt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Outputs": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cdf1eb07-207e-4c03-90c6-2731aefb4e06",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b94a1badad5c74bb198fcbd6d858de30c64abe740262d6937ab4715e01bb04ae"
+  },
+  "id": "srsN2fzEsxqTUPF8",
+  "tags": []
+}
