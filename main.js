@@ -36,6 +36,14 @@ async function postToEndpoint(endpoint, payload, timeoutMs = 45000) {
 document.addEventListener("DOMContentLoaded", () => {
   historyBox.value = localStorage.getItem("chatHistory") || "";
   historyBox.style.display = "none";
+
+  // Enter = enviar, Shift+Enter = nueva línea
+  inputBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 });
 
 async function sendMessage() {
