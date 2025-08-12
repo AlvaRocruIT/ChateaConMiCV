@@ -204,7 +204,7 @@
             {
               "id": "459fddf6-4adb-4bc3-8b7c-d426742d5dc6",
               "name": "compiledContext",
-              "value": "=[CV] {{$node[\"Recortar CV\"].json.cvRecortado || $node[\"Request cv.txt\"].json.cv}} \n[QAS] {{$node[\"Select QA\"].json.qaSelectedString || \"\"}}\n[ROL (NO FACTUAL)] {{($node[\"Request Role.txt\"].json.role || \"\").substring(0,1200)}} [PREGUNTA] {{$node[\"Webhook\"].json.text || \"\"}}\n[SCORE] {{$node[\"Select QA\"].json.topScore || 0}}",
+              "value": "=[CV] {{$node[\"Recortar CV\"].json.cvRecortado || $node[\"Request cv.txt\"].json.cv}} \n[QAS] {{$node[\"Select QA\"].json.qaSelectedString || \"\"}}\n[ROL (NO FACTUAL)] {{($node[\"Request Role.txt\"].json.role || \"\").substring(0,1200)}} \n[PREGUNTA] {{$node[\"Carry Text\"].json.text || \"\"}}\n[SCORE] {{$node[\"Select QA\"].json.topScore || 0}}",
               "type": "string"
             },
             {
@@ -470,7 +470,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "500a37a5-bbd4-443e-99bf-d2ad5dce8a1f",
+  "versionId": "d0db527c-8d7b-4b6c-b266-3e68073c9cb7",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b94a1badad5c74bb198fcbd6d858de30c64abe740262d6937ab4715e01bb04ae"
