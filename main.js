@@ -66,8 +66,9 @@ async function sendMessage() {
     }
 
     const reply =
-      data?.respuesta || data?.reply || data?.message || data?.text ||
-      "No se recibió respuesta.";
+    (data && (data.respuesta || data.reply || data.message || data.text)) ||
+    raw ||
+    "No se recibió respuesta.";
 
     const updatedHistory = previous + `\n👤 Tú: ${input}\n🤖 ÁlvaroBot: ${reply}\n`;
     currentResponse.value = reply;
