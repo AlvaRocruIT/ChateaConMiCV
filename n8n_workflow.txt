@@ -6,7 +6,7 @@
         "promptType": "define",
         "text": "={{$json.compiledContext}}",
         "options": {
-          "systemMessage": "Actúas como un asistente tipo chat interactivo que representa a Álvaro. Usa SOLO el CONTEXTO – FUENTES para hechos. La “Descripción del cargo” es contexto NO factual (solo tono/enfoque).\n\nReglas:\nUsa SOLO el CONTEXTO – FUENTES. Prioridad: Q&A > CV. No inventes.\nSi [SCORE] == 0: pide UNA aclaración breve (p. ej.: “¿Qué aspecto te interesa: experiencia, habilidades o proyectos?”).\nSi [SCORE] >= 1: responde usando el contexto; si faltan datos, di: “No encuentro esa información en mis fuentes.”\nEstilo: español claro y cercano; 3–6 líneas o viñetas breves; sin prefacios ni meta‑comentarios.\nCita la fuente cuando aplique: (Q&A) o (CV).\nResponde solo texto plano.\n",
+          "systemMessage": "Actúas como un asistente tipo chat interactivo que representa a Álvaro. Usa SOLO el CONTEXTO – FUENTES para hechos. La “Descripción del cargo” es contexto NO factual (solo tono/enfoque).\n\nReglas:\nUsa SOLO el CONTEXTO – FUENTES. Prioridad: Q&A > CV. No inventes.\nSi [SCORE] == 0: pide UNA aclaración breve (p. ej.: “¿Qué aspecto te interesa: experiencia, habilidades o proyectos?”).\nSi [SCORE] >= 1: responde usando el contexto; si faltan datos, di: “No encuentro esa información en mis fuentes.”\nEstilo: español claro y cercano; 3–6 líneas o viñetas breves; sin prefacios ni meta‑comentarios.\nResponde solo texto plano.\n",
           "returnIntermediateSteps": false
         }
       },
@@ -26,7 +26,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "{ \"respuesta\": \"{{$json.respuesta}}\" }",
+        "responseBody": "={{ $json.respuesta }}",
         "options": {
           "responseCode": 200,
           "responseHeaders": {
@@ -160,7 +160,7 @@
     },
     {
       "parameters": {
-        "content": "## I'm a note:\n\n$body = @{ text = \"hola\" } | ConvertTo-Json\nInvoke-RestMethod -Method POST -Uri 'https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV' -ContentType 'application/json' -Body $body"
+        "content": "## I'm a note:\n\n$body = @{ text = \"personas\" } | ConvertTo-Json\nInvoke-RestMethod -Method POST -Uri 'https://alvarovargas.app.n8n.cloud/webhook-test/ChateaConMiCV' -ContentType 'application/json' -Body $body"
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -173,7 +173,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const qaItems = $input.all();\nconst question = String(qaItems[0]?.json?.text || \"\").toLowerCase();\nconst qaArray = qaItems.map(i => i.json);\n\nif (!question || !qaArray.length) {\n  return [{ json: { qaSelected: [], qaSelectedString: \"\", topScore: 0 } }];\n}\n\nconst words = Array.from(new Set(\n  question.split(/[^a-záéíóúüñ0-9]+/i).filter(Boolean)\n)).slice(0, 12);\n\nfunction score(it) {\n  const t = `${it.q || \"\"} ${it.a || \"\"}`.toLowerCase();\n  return words.reduce((s, w) => s + (t.includes(w) ? 1 : 0), 0);\n}\n\nconst ranked = qaArray\n  .map(it => ({ ...it, _score: score(it) }))\n  .sort((a, b) => b._score - a._score)\n  .slice(0, 3)\n  .map(it => ({\n    q: String(it.q || \"\").trim(),\n    a: String(it.a || \"\").replace(/\\s+/g, \" \").trim().slice(0, 280),\n    _score: it._score\n  }));\n\nconst qaSelectedString = ranked\n  .map((it, i) => `Q${i + 1}: ${it.q}\\nA${i + 1}: ${it.a}`)\n  .join(\"\\n\\n\");\n\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore: ranked[0]?._score || 0 } }];"
+        "jsCode": "const qaItems = $input.all();\nconst questionRaw = String(qaItems[0]?.json?.text || \"\");\n\nfunction normalize(s){ return s.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase(); }\nfunction tokens(s){ return normalize(s).split(/[^a-z0-9]+/).filter(Boolean); }\n\nconst stop = new Set(['de','la','el','y','en','a','un','una','para','que','con','los','las','del','al','por','se','es','lo','mi','su','tu','como','sobre','que','cual','donde','cuando']);\nconst qTokens = tokens(questionRaw).filter(t => !stop.has(t));\nconst qSet = new Set(qTokens);\n\nfunction scoreQA(it){\n  const merged = `${it.q ?? it.Q ?? \"\"} ${it.a ?? it.A ?? \"\"}`;\n  const tks = tokens(merged);\n  let s = 0;\n  for (const t of tks) if (qSet.has(t)) s++;\n  const nq = normalize(questionRaw), nm = normalize(merged);\n  if (nq.length >= 8 && nm.includes(nq)) s += 3;\n  return s;\n}\n\nconst qaArray = qaItems.map(i => i.json);\nconst rankedRaw = qaArray.map(it => ({ ...it, _score: scoreQA(it) }))\n  .sort((a,b) => b._score - a._score)\n  .slice(0,3);\n\nconst ranked = rankedRaw.map(it => ({\n  q: String((it.q ?? it.Q) || \"\").trim(),\n  a: String((it.a ?? it.A) || \"\").replace(/\\s+/g,\" \").trim().slice(0,280),\n  _score: it._score\n}));\n\nconst topScore = ranked[0]?._score || 0;\nconst qaSelectedString = topScore > 0\n  ? ranked.map((it,i)=>`Q${i+1}: ${it.q}\\nA${i+1}: ${it.a}`).join(\"\\n\\n\")\n  : \"\";\n\nreturn [{ json: { qaSelected: ranked, qaSelectedString, topScore } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -268,7 +268,7 @@
             {
               "id": "f001d721-4013-4fcc-92dc-5accb585ce8b",
               "name": "respuesta",
-              "value": "=$json.output || $json.text || $json.message || $json.content || \"No encuentro esa información en mis fuentes.\"",
+              "value": "={{ $json.output }}",
               "type": "string"
             }
           ]
@@ -291,7 +291,13 @@
             {
               "id": "98eeb138-49e3-4584-8563-715c8bcde7d4",
               "name": "text",
-              "value": "=$json.text",
+              "value": "={{ $json.body.text }}",
+              "type": "string"
+            },
+            {
+              "id": "74366843-ccd1-44df-a260-fb5d93acc8e3",
+              "name": "",
+              "value": "",
               "type": "string"
             }
           ]
@@ -314,7 +320,19 @@
             {
               "id": "d11f7b3d-4d53-4799-af87-6925e325f1d8",
               "name": "text",
-              "value": "=$node[\"Carry Text\"].json.text",
+              "value": "={{ $('Carry Text').item.json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "69613192-ee91-46ba-abee-1d27a434821a",
+              "name": "q",
+              "value": "={{ $json.q }}",
+              "type": "string"
+            },
+            {
+              "id": "aafa72be-58d7-422c-98a1-e0fb26f87d5d",
+              "name": "a",
+              "value": "={{ $json.a }}",
               "type": "string"
             }
           ]
@@ -470,7 +488,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d0db527c-8d7b-4b6c-b266-3e68073c9cb7",
+  "versionId": "0c393696-6ad3-4ebd-b97f-2dc015b400d1",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b94a1badad5c74bb198fcbd6d858de30c64abe740262d6937ab4715e01bb04ae"
